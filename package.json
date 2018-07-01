@@ -1,0 +1,14 @@
+{
+  "name": "linky",
+  "version": "1.0.0",
+  "description": "Linky, the most awesome blockchain platform in NodeJS",
+  "main": "src/server.js",
+  "repository": "https://github.com/monstercoders/linky",
+  "author": "hyunsu.im <ace.hyunsu@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "hex-to-binary": "^1.0.1"
+  }
+}
