@@ -41,3 +41,25 @@ let blockchain = [genesisBlock];
 const getNewestBlock = () => blockchain[blockchain.length - 1];
 const getBlockchain = () => blockchain;
 const getTimestamp = () => Math.round(new Date().getTime() / 1000);
+
+const createNewBlock = data => {
+    const previousBlock = getNewestBlock();
+    const newBlockIndex = previousBlock.index + 1;
+    const newTimestamp = getTimestamp();
+    addBlockToChain(newBlock);
+    require("./p2p").broadcastNewBlock();
+    return newBlock;
+};
+
+const addBlockToChain = candidateBlock => {
+    blockchain.push(candidateBlock);
+    return true;
+};
+
+console.log(blockchain);
+
+module.exports = {
+    getBlockchain,
+    createNewBlock,
+    addBlockToChain
+}

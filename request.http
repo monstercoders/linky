@@ -1,0 +1,8 @@
+GET http://localhost:1588/blocks
+
+###
+POST http://localhost:1588/blocks
+Content-Type: application/json
+{
+    "data": "Second block!!"
+}
