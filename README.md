@@ -24,8 +24,9 @@ JSON view
 
 [git command]
 git config --global user.email "ace.hyunsu@gmail.com"
-git add .
+git add *
 git remote add https://github.com/monstercoders/linky
+git commit -m "COMMENT"
 git push origin master
 
 [Project test]
