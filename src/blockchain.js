@@ -1,5 +1,9 @@
 const CryptoJS = require("crypto-js"),
-    hexToBinary = require("hex-to-binary");
+    Provider = require("./provider"),
+    Consumer = require("./consumer");
+
+const { initProvider, getPublicFromProvider } = Provider;
+const { initConsumer, getPublicFromConsumer } = Consumer;
 
 class Block {
     constructor(index, hash, previousHash, timestamp, address, dataType, dataSerial, data, key){
