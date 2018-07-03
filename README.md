@@ -16,7 +16,7 @@ npm install yarn
 yarn init
 yarn add crypto-js elliptic hex-to-binary
 yarn add path
-yarn add express morgan body-parser
+yarn add express morgan cors body-parser
 yarn global add nodemon
 
 [Chrome extesion install]

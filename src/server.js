@@ -1,4 +1,5 @@
 const express = require("express"),
+    cors = require("cors"),
     bodyParser = require("body-parser"),
     morgan = require("morgan"),
     Blockchain = require("./blockchain"),
@@ -13,16 +14,22 @@ const PORT = 1588;
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 app.use(morgan("combined"));
-app.get("/blocks", (req, res) => {
-    res.send(getBlockchain());
-});
-
-app.post("/blocks", (req, res) => {
-    const { body: { data } } = req;
-    const newBlock = createNewBlock(data);
-    res.send(newBlock);
-});
+app.get("/blocks", (req, res) => { res.send(getBlockchain()); })
+    .post("/blocks", (req, res) => {
+        try {
+            const { body: { video, generalData } } = req;
+            if (video === undefined || generalData === undefined) {
+                throw Error("Please specify video and data");
+            } else {
+                const newBlock = createNewBlock(video, generalData);
+                res.send(newBlock);
+            }
+        } catch (e) {
+            res.status(400).send(e.message);
+        }
+    });
 
 app.get("/provider/address", (req, res) => {
     res.send(getPublicFromProvider());
