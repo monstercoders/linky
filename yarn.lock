@@ -244,6 +244,10 @@ ipaddr.js@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.6.0.tgz#e3fa357b773da619f26e95f049d055c72796f86b"
 
+iv@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/iv/-/iv-0.0.1.tgz#1283c7585fe9393560571184e2db068c9967387c"
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"

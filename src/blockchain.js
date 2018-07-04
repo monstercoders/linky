@@ -2,19 +2,18 @@ const CryptoJS = require("crypto-js"),
     Provider = require("./provider"),
     Consumer = require("./consumer");
 
-const { initProvider, getPublicFromProvider } = Provider;
-const { initConsumer, getPublicFromConsumer } = Consumer;
+const { initProvider, getPublicFromProvider, getPrivateFromProvider } = Provider;
+const { initConsumer, getPublicFromConsumer, getPrivateFromConsumer } = Consumer;
 
 class Block {
-    constructor(index, hash, previousHash, timestamp, address, key, dataType, dataSerial, data){
+    constructor(index, hash, previousHash, timestamp, address, key, dataType, data){
         this.index = index;
         this.hash = hash;
         this.previousHash = previousHash;
         this.timestamp = timestamp;
         this.address = address;
-        this.dataType = dataType;
-        this.dataSerial = dataSerial;
         this.key = key;
+        this.dataType = dataType;
         this.data = data;
     }
 }
@@ -44,6 +43,14 @@ const genesisBlock = new Block(
 
 let blockchain = [genesisBlock];
 
+var ecr = function(obj, key) {
+    return CryptoJS.AES.encrypt(JSON.stringify(obj), key).toString();
+};
+ 
+var dcr = function(obj, key) {
+    return JSON.parse(CryptoJS.AES.decrypt(obj, key).toString(CryptoJS.enc.Utf8));
+};
+
 const getNewestBlock = () => blockchain[blockchain.length - 1];
 const getBlockchain = () => blockchain;
 const getTimestamp = () => Math.round(new Date().getTime() / 1000);
@@ -57,13 +64,23 @@ const createNewBlock = (video, generalData) => {
     const previousBlockHash = previousBlock.hash;
     const newTimestamp = getTimestamp();
     const blockData = new VehicleData(video, generalData);
-    const randomKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const randomKey = Math.random().toString(35).substring(2, 15) + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const encryptKey = ecr(randomKey, getPrivateFromProvider());
+    //const decryptKey = dcr(encryptKey, getPrivateFromProvider());
+
+    //console.log("###");
+    //console.log(randomKey);
+    //console.log("###");
+    //console.log(encryptKey);
+    //console.log("###");
+    //console.log(decryptKey);
+
     const hash = createHash(
         newBlockIndex,
         previousBlockHash,
         newTimestamp,
-        getPublicFromConsumer(),
-        randomKey,
+        getPublicFromProvider(),
+        encryptKey,
         "vehicle",
         blockData
     );
@@ -73,8 +90,8 @@ const createNewBlock = (video, generalData) => {
         hash,
         previousBlockHash,
         newTimestamp,
-        getPublicFromConsumer(),
-        randomKey, // TODO: randomkey with public key hash
+        getPublicFromProvider(),
+        encryptKey,
         "vehicle",
         blockData
     )
